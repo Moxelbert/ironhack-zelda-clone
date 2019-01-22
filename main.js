@@ -270,10 +270,6 @@ var height = canvas.height
 //     }
 // //window.requestAnimationFrame(updateCanvas);
 
-// // var intervalId = setInterval(function () {
-// //     updateCanvas()
-// //   }, 1000/60);
-
 // document.onkeydown = function (e) {
 //     e.preventDefault()
 //     switch (e.keyCode) {
@@ -287,11 +283,36 @@ var height = canvas.height
 // }
 //clearCanvas()
 
+function clearArena() {
+        ctx.clearRect(0, 0, 1200, 800);
+}
+var intervalId = setInterval(function () {
+     clearArena()
+     drawFighter()
+     drawSkeletonArcher()
+   }, 1000/60);
 
 var archer = new Image();
 archer.src = 'Hero4.png'
-var fighter = new Fighter(100, 100, 500);
+var skeletonArcher = new Image();
+skeletonArcher.src = 'skeletonArcher.png'
+var fighter = new Fighter(100, 100, 700);
 function drawFighter() {
     ctx.drawImage(archer, fighter.x, fighter.y, 100, 100)
 }
-// drawFighter()
+var skeletonArcher1 = new Foe(100, 1000, 700);
+function drawSkeletonArcher() {
+    ctx.drawImage(skeletonArcher, skeletonArcher1.x, skeletonArcher1.y, 100, 100)
+}
+
+document.onkeydown = function (e) {
+    e.preventDefault()
+    switch (e.keyCode) {
+        case 37: fighter.moveLeft(); break;
+        case 38: fighter.moveUp(); break;
+        case 39: fighter.moveRight(); break;
+        case 32: fighter.shoot(); break;
+    }
+    drawFighter()
+}
+//clearCanvas()
