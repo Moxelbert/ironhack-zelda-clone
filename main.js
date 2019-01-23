@@ -7,6 +7,8 @@ var ctx = canvas.getContext("2d")
 var width = canvas.width
 var height = canvas.height
 
+//     var grass = new Image();
+//     grass.src = 'grass.png';
 //     var sand = new Image();
 //     sand.src = 'sand.jpg';
 //     var fountain = new Image();
@@ -113,6 +115,7 @@ var height = canvas.height
 //     ctx.lineTo(100, 120);
 //     ctx.stroke();
 
+//         ctx.Image(grass,0,0,1200,800)
 //         ctx.drawImage(house, 1100, 400, 100, 100);
 //         ctx.drawImage(house2, 1000, 350, 100, 100);
 //         ctx.drawImage(house3, 950, 500, 100, 100); 
@@ -283,27 +286,65 @@ var height = canvas.height
 // }
 //clearCanvas()
 
+var graveyard = new Image();
+graveyard.src = 'background.jpg'
+function drawBg() {
+    ctx.drawImage(graveyard, 0, 0, 1200, 800)
+}
+var archer = new Image();
+archer.src = 'Hero4.png'
+var skeletonArcher = new Image();
+skeletonArcher.src = 'skeletonArcher.png'
+var fighter = new Fighter(100, 100, 650);
+function drawFighter() {
+    ctx.drawImage(archer, fighter.x, fighter.y, 150, 150)
+}
+var skeletonArcher1 = new Foe(100, 1000, 650);
+function drawSkeletonArcher() {
+    ctx.drawImage(skeletonArcher, skeletonArcher1.x, skeletonArcher1.y, 150, 150)
+}
+
+var arrowHero = new Arrow(0, 0);
+function arrowHeroClear(){
+    arrowHero.x = 0
+    arrowHero.y = 0
+}
+var arrowSkeleton = new Arrow(0, 0);
+function arrowSkeletonClear(){
+    arrowSkeleton.x = 0
+    arrowSkeleton.y = 0
+}
+
+function calculateDamage() {
+    if (arrowHero.y === skeletonArcher1.y) {
+        skeletonArcher1.health -= 10
+    }
+    if (arrowSkeleton.y === fighter.y) {
+        fighter.health -= 10
+    }
+}
+
+function finish(){
+    if(skeletonArcher1.health <=0){
+        alert('You won!')
+    }
+    if(fighter.health <=0)
+    alert('You lose(r)!')
+}
+
 function clearArena() {
         ctx.clearRect(0, 0, 1200, 800);
 }
 var intervalId = setInterval(function () {
      clearArena()
+     drawBg()
      drawFighter()
      drawSkeletonArcher()
+     calculateDamage()
+     finish()
+     arrowHeroClear()
+     arrowSkeletonClear()
    }, 1000/60);
-
-var archer = new Image();
-archer.src = 'Hero4.png'
-var skeletonArcher = new Image();
-skeletonArcher.src = 'skeletonArcher.png'
-var fighter = new Fighter(100, 100, 700);
-function drawFighter() {
-    ctx.drawImage(archer, fighter.x, fighter.y, 100, 100)
-}
-var skeletonArcher1 = new Foe(100, 1000, 700);
-function drawSkeletonArcher() {
-    ctx.drawImage(skeletonArcher, skeletonArcher1.x, skeletonArcher1.y, 100, 100)
-}
 
 document.onkeydown = function (e) {
     e.preventDefault()
@@ -315,4 +356,4 @@ document.onkeydown = function (e) {
     }
     drawFighter()
 }
-//clearCanvas()
+
