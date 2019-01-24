@@ -7,6 +7,9 @@ var ctx = canvas.getContext("2d")
 var width = canvas.width
 var height = canvas.height
 
+var iwanttofight = false
+var theDarkKey = false
+
 var grass = new Image();
 grass.src = 'grass.png';
 var sand = new Image();
@@ -23,8 +26,6 @@ var house3 = new Image();
 house3.src = 'house3.png';
 var wood2 = new Image();
 wood2.src = 'wood2.png';
-var wood3 = new Image();
-wood3.src = 'wood3.png';
 var castle = new Image();
 castle.src = 'castle.png';
 var cow = new Image();
@@ -68,6 +69,7 @@ cherry.src = 'cherryTree.png';
 var water = new Image();
 water.src = 'water.png';
 
+
 function board() {
     ctx.drawImage(grass, 0, 0, 1200, 800)
     var pat = ctx.createPattern(sand, "repeat");
@@ -95,7 +97,6 @@ function board() {
     //     ctx.stroke();
     // }
 
-    //water.onload = function () {
     var patWat = ctx.createPattern(water, "repeat");
     ctx.fillStyle = patWat;
     ctx.beginPath();
@@ -108,7 +109,6 @@ function board() {
     ctx.lineTo(225, 850);
     ctx.strokeStyle = patWat;
     ctx.stroke();
-    //}
     ctx.beginPath();
     ctx.strokeStyle = 'w#3333cc';
     ctx.lineWidth = 1;
@@ -135,7 +135,6 @@ function board() {
     ctx.drawImage(skull, 150, 400, 70, 70);
     ctx.drawImage(oldTree, 25, 400, 80, 80);
     ctx.drawImage(lumber, 20, 460, 50, 50);
-    ctx.drawImage(wood3, 600, 440, 50, 50);
     ctx.drawImage(grave1, 1100, 150, 50, 50);
     ctx.drawImage(grave2, 1150, 180, 50, 50);
     ctx.drawImage(grave3, 1100, 220, 50, 50);
@@ -143,7 +142,6 @@ function board() {
 }
 function forrest() {
 
-    //tanne.onload = function () {
     for (var i = 0; i <= 8; i++) {
         if (i % 2 === 0) {
             ctx.drawImage(tanne, 400 + (i * 50), 200, 60, 90);
@@ -189,6 +187,32 @@ function drawEverything() {
     forrest()
 }
 
+function startFight() {
+    intervalId1 = setInterval(function () {
+        clearArena()
+        drawBg()
+        drawFighter()
+        drawSkeletonArcher()
+        calculateDamage()
+        finish()
+        arrowHeroClear()
+        arrowSkeletonClear()
+    }, 1000 / 60)
+    intervalId2 = setInterval(function () {
+        skeletonFighting()
+         }, 500)
+    document.onkeydown = function (r) {
+        r.preventDefault()
+        switch (r.keyCode) {
+            case 37: fighter.moveLeft(); break;
+            case 38: fighter.moveUp(); break;
+            case 39: fighter.moveRight(); break;
+            case 32: fighter.shoot(); break;
+        }
+        drawFighter()
+    }
+}
+
 function clearCanvas() {
     ctx.clearRect(0, 0, 1200, 800);
 }
@@ -218,6 +242,9 @@ class Hero {
             this.x -= 20
         }
     }
+    askMonster(){
+        interaction()
+    }
 }
 
 class Monster {
@@ -242,158 +269,158 @@ var orc1 = new Monster(350, 190);
 var sorcerer = new Image();
 sorcerer.src = 'Sorcerer.png';
 var sorcerer1 = new Monster(100, 420)
+var wood3 = new Image();
+wood3.src = 'wood3.png';
+var wood = new Monster (600, 440)
 
 function drawMonsters() {
     ctx.drawImage(skeleton, 1050, 180, 50, 50)
     ctx.drawImage(orc, 350, 190, 50, 50)
     ctx.drawImage(sorcerer, 100, 420, 50, 50)
+    ctx.drawImage(wood3, 600, 410, 50, 50)
+}
+function clearArena() {
+    ctx.clearRect(0, 0, 1200, 800);
 }
 
-var iwanttofight = false
-
-drawEverything()
-document.onkeydown = function (e) {
-    e.preventDefault()
-    switch (e.keyCode) {
-        case 37: player.moveLeft(); break;
-        case 38: player.moveUp(); break;
-        case 39: player.moveRight(); break;
-        case 40: player.moveDown(); break;
-    }
-    updateCanvas()
+var graveyard = new Image();
+graveyard.src = 'background.jpg'
+function drawBg() {
+    ctx.drawImage(graveyard, 0, 0, 1200, 800)
 }
+var archer = new Image();
+archer.src = 'Hero4.png'
+var skeletonArcher = new Image();
+skeletonArcher.src = 'skeletonArcher.png'
+var fighter = new Fighter(100, 100, 650);
+function drawFighter() {
+    ctx.drawImage(archer, fighter.x, fighter.y, 150, 150)
+}
+var skeletonArcher1 = new Foe(100, 1000, 650);
+function drawSkeletonArcher() {
+    ctx.drawImage(skeletonArcher, skeletonArcher1.x, skeletonArcher1.y, 150, 150)
+}
+var arrowHero = new Arrow(0, 0);
+function arrowHeroClear() {
+    arrowHero.x = 0
+    arrowHero.y = 0
+}
+var arrowSkeleton = new Arrow(0, 0);
+function arrowSkeletonClear() {
+    arrowSkeleton.x = 0
+    arrowSkeleton.y = 0
+}
+function finish() {
+    if (skeletonArcher1.health <= 0) {
+        confirm('You won!')
+        iwanttofight = false
+        clearInterval(intervalId1)
+        clearInterval(intervalId2)
+        skeletonArcher1.health = 100
+        fighter.health = 100
+        player.x = 0
+        player.y = 0
+        drawEverything()
+        drawHero()
+        drawMonsters()
+    }
+    if (fighter.health <= 0) {
+        confirm('You lose(r)!')
+        iwanttofight = false
+        clearInterval(intervalId1)
+        clearInterval(intervalId2)
+        skeletonArcher1.health = 100
+        fighter.health = 100
+        player.x = 0
+        player.y = 0
+        drawEverything()
+        drawHero()
+        drawMonsters()
+    }
+}
+
+function calculateDamage() {
+    if (arrowHero.y === skeletonArcher1.y) {
+        skeletonArcher1.health -= 10
+    }
+    if (arrowSkeleton.y === fighter.y) {
+        fighter.health -= 10
+    }
+}
+function skeletonFighting() {
+    if (Math.floor(Math.random() * 5) === 0) {
+        skeletonArcher1.moveLeft();
+    }
+    else if (Math.floor(Math.random() * 5) === 1) {
+        skeletonArcher1.moveRight();
+    }
+    else if (Math.floor(Math.random() * 5) === 2) {
+        skeletonArcher1.moveUp();
+    }
+    else {skeletonArcher1.shoot(); }
+}
+function interaction(){
+if (Math.abs(sceleton1.x - player.x) <= 10 && Math.abs(sceleton1.y - player.y) <= 10) {
+    confirm('Skeleton: You wansum?')
+    iwanttofight = true
+    clearInterval(intervalId)
+    startFight()
+}
+if (Math.abs(sorcerer1.x - player.x) <= 10 && Math.abs(sorcerer1.y - player.y) <= 10) {
+    confirm('Evil Wizard: Fuck off')
+}
+if (Math.abs(orc1.x - player.x) <= 10 && Math.abs(orc1.y - player.y) <= 10) {
+    confirm('Orc: fook fook 5$"')
+}
+if (Math.abs(wood.x - player.x) <= 10 && Math.abs(wood.y - player.y) <= 10) {
+    confirm('to the east, you shall find the desert land of Mönchengladbach. The dark portal is in the west')
+}
+}
+
+if (iwanttofight === false) {
+    var intervalId = setInterval(function () {
+        clearCanvas()
+        drawEverything()
+        drawHero()
+        drawMonsters()
+    }, 1000 / 60)
+        document.onkeydown = function (e) {
+            e.preventDefault()
+            switch (e.keyCode) {
+                case 37: player.moveLeft(); break;
+                case 38: player.moveUp(); break;
+                case 39: player.moveRight(); break;
+                case 40: player.moveDown(); break;
+                case 69: player.askMonster(); break;
+            }            
+        }
     
-    
-    function clearArena() {
-        ctx.clearRect(0, 0, 1200, 800);
-    }
+// } else {
+//     intervalId1 = setInterval(function () {
+//             clearArena()
+//             drawBg()
+//             drawFighter()
+//             drawSkeletonArcher()
+//             calculateDamage()
+//             finish()
+//             arrowHeroClear()
+//             arrowSkeletonClear()
+//             skeletonFighting()
+//         }, 1000 / 60)
+    // intervalId2 = setInterval(function () {
+    // skeletonFighting()
+    // }, 5000)
+// document.onkeydown = function (r) {
+//     r.preventDefault()
+//     switch (r.keyCode) {
+//         case 37: fighter.moveLeft(); break;
+//         case 38: fighter.moveUp(); break;
+//         case 39: fighter.moveRight(); break;
+//         case 32: fighter.shoot(); break;
+//     }
+//     drawFighter()
+// }   
+}
 
-    var graveyard = new Image();
-    graveyard.src = 'background.jpg'
-    function drawBg() {
-        ctx.drawImage(graveyard, 0, 0, 1200, 800)
-    }
-    var archer = new Image();
-    archer.src = 'Hero4.png'
-    var skeletonArcher = new Image();
-    skeletonArcher.src = 'skeletonArcher.png'
-    var fighter = new Fighter(100, 100, 650);
-    function drawFighter() {
-        ctx.drawImage(archer, fighter.x, fighter.y, 150, 150)
-    }
-    var skeletonArcher1 = new Foe(100, 1000, 650);
-    function drawSkeletonArcher() {
-        ctx.drawImage(skeletonArcher, skeletonArcher1.x, skeletonArcher1.y, 150, 150)
-    }
-    var arrowHero = new Arrow(0, 0);
-    function arrowHeroClear() {
-        arrowHero.x = 0
-        arrowHero.y = 0
-    }
-    var arrowSkeleton = new Arrow(0, 0);
-    function arrowSkeletonClear() {
-        arrowSkeleton.x = 0
-        arrowSkeleton.y = 0
-    }
-    function finish() {
-        if (skeletonArcher1.health <= 0) {
-            confirm('You won!')
-            skeletonArcher1.health =100
-            fighter.health = 100
-            iwanttofight = false
-            player.x = 0
-            player.y = 0
-            drawEverything()
-        }
-        if (fighter.health <= 0) {
-            confirm('You lose(r)!')
-            skeletonArcher1.health =100
-            fighter.health = 100
-            iwanttofight = false
-            player.x = 0
-            player.y = 0
-            window.clearInterval(fightingIntervalId)
-            fightingIntervalId = undefined
-            drawEverything()
-        }
-    }
-    
-    function calculateDamage() {
-        if (arrowHero.y === skeletonArcher1.y) {
-            skeletonArcher1.health -= 10
-        }
-        if (arrowSkeleton.y === fighter.y) {
-            fighter.health -= 10
-        }
-    }
-    function skeletonFighting() {
-        if (Math.floor(Math.random() * 5) === 0) {
-            skeletonArcher1.moveLeft();
-        }
-        else if (Math.floor(Math.random() * 5) === 1) {
-            skeletonArcher1.moveRight();
-        }
-        else if (Math.floor(Math.random() * 5) === 2) {
-            skeletonArcher1.moveUp();
-        }
-        else {skeletonArcher1.shoot(); }
-    }
-
-    function updateCanvas() {
-
-        if (iwanttofight) {
-            var intervalId = setInterval(function () {
-                if (iwanttofight){
-                clearArena()
-                drawBg()
-                drawFighter()
-                drawSkeletonArcher()
-                calculateDamage()
-                finish()
-                arrowHeroClear()
-                arrowSkeletonClear()}
-                else {
-                clearCanvas()
-                drawEverything()
-                drawMonsters()
-                drawHero()}
-            }, 1000 / 60)
-            // var intervalId = setInterval(function () {
-            // skeletonFighting()
-            // }, 500);  
-            document.onkeydown = function (r) {
-                r.preventDefault()
-                switch (r.keyCode) {
-                    case 37: fighter.moveLeft(); break;
-                    case 38: fighter.moveUp(); break;
-                    case 39: fighter.moveRight(); break;
-                    case 32: fighter.shoot(); break;
-                }
-                drawFighter()
-            }
-        } else {
-            if (Math.abs(sceleton1.x - player.x) <= 10 && Math.abs(sceleton1.y - player.y) <= 10) {
-                confirm('Skeleton: You wansum?')
-                iwanttofight = true
-            }
-            if (Math.abs(sorcerer1.x - player.x) <= 10 && Math.abs(sorcerer1.y - player.y) <= 10) {
-                confirm('Evil Wizard: Fuck off')
-            }
-            if (Math.abs(orc1.x - player.x) <= 10 && Math.abs(orc1.y - player.y) <= 10) {
-                confirm('Orc: fook fook 5$"')
-            }
-            clearCanvas()
-            drawEverything()
-            drawMonsters()
-            drawHero()
-        }
-
-        //window.requestAnimationFrame(updateCanvas)
-    }
-    //window.requestAnimationFrame(updateCanvas);
-
-    //drawHero()
-
-//clearCanvas()
 
 
