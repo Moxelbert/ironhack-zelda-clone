@@ -37,9 +37,10 @@ moveRight() {
         }
     }
     shoot() {
+        if (powerLaser) {        
         arrowHero.x = fighter.x    
         arrowHero.y = fighter.y   
-        ctx.fillStyle = 'brown'
+        ctx.strokeStyle = 'red'
         ctx.beginPath();
         ctx.lineWidth = 10;
         ctx.moveTo(this.x+50, this.y+50);
@@ -47,5 +48,17 @@ moveRight() {
         ctx.closePath()
         ctx.stroke()
         ctx.fill()    
+        } else {
+            arrowHero.x = fighter.x    
+            arrowHero.y = fighter.y   
+            ctx.strokeStyle = 'blue'
+            ctx.beginPath();
+            ctx.lineWidth = 10;
+            ctx.moveTo(this.x+50, this.y+50);
+            ctx.lineTo(1200, this.y+50);
+            ctx.closePath()
+            ctx.stroke()
+            ctx.fill() 
+        }
     }
 }

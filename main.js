@@ -8,7 +8,10 @@ var width = canvas.width
 var height = canvas.height
 
 var iwanttofight = false
-var theDarkKey = false
+var powerLaser = true
+var energyShard = true
+var goblinHammer = false
+
 
 var grass = new Image();
 grass.src = 'grass.png';
@@ -36,12 +39,10 @@ var bridge = new Image();
 bridge.src = 'bridge.png';
 var rock = new Image();
 rock.src = 'rock.png';
-var chest = new Image();
-chest.src = 'chest.png';
 var skull = new Image();
 skull.src = 'skull.png';
-var teleport = new Image();
-teleport.src = 'teleport.png';
+var ballermann = new Image();
+ballermann.src = 'ballermann2.jpg'
 var torch = new Image();
 torch.src = 'torch.png';
 var oldTree = new Image();
@@ -68,7 +69,8 @@ var cherry = new Image();
 cherry.src = 'cherryTree.png';
 var water = new Image();
 water.src = 'water.png';
-
+var anvil = new Image();
+anvil.src = 'anvil.png';
 
 function board() {
     ctx.drawImage(grass, 0, 0, 1200, 800)
@@ -127,11 +129,11 @@ function board() {
     ctx.drawImage(bridge, 230, 580, 80, 60);
     ctx.drawImage(bridge, 80, 60, 80, 60);
     ctx.drawImage(rock, 200, 160, 80, 60);
-    ctx.drawImage(teleport, 80, 380, 80, 80);
+    // ctx.drawImage(teleport, 80, 380, 80, 80);
     ctx.drawImage(torch, 75, 300, 100, 100);
-    ctx.drawImage(chest, 310, 200, 30, 30);
-    ctx.drawImage(chest, 110, 360, 30, 30);
-    ctx.drawImage(chest, 1110, 200, 30, 30);
+    // ctx.drawImage(chest, 310, 200, 30, 30);
+    // ctx.drawImage(chest, 110, 360, 30, 30);
+    // ctx.drawImage(chest, 1110, 200, 30, 30);
     ctx.drawImage(skull, 150, 400, 70, 70);
     ctx.drawImage(oldTree, 25, 400, 80, 80);
     ctx.drawImage(lumber, 20, 460, 50, 50);
@@ -139,7 +141,13 @@ function board() {
     ctx.drawImage(grave2, 1150, 180, 50, 50);
     ctx.drawImage(grave3, 1100, 220, 50, 50);
     ctx.drawImage(tower, 50, 580, 70, 180);
+    ctx.drawImage(anvil, 300, 190, 50,50)
 }
+var drews = new Audio("12 Ich bin der König von Mallorca (V.m4a")
+function playSound() {
+    drews.play()
+} 
+
 function forrest() {
 
     for (var i = 0; i <= 8; i++) {
@@ -182,13 +190,107 @@ function forrest() {
         }
     }
 }
+
+function intro() {
+    clearInterval(intervalId)
+    clearInterval(intervalId1)
+    clearInterval(intervalId2)
+    clearCanvas()
+    ctx.fillStyle = '#006600'
+    ctx.font = '80px serif';
+    ctx.rect(0, 0, 1200, 800) 
+    ctx.strokeRect(0, 0, 1200, 800) 
+    ctx.fillText("Our hero enters the portal.", 300, 200, 600)
+    ctx.fillText('The border of time and space begin to dissolve.', 300, 260, 600)
+    ctx.fillText('After some time a strange music starts to play.', 300, 320, 600)
+    ctx.fillText('When our hero opens the eyes, he finds himself in a foreign and beautiful country.', 250, 380, 800)
+    ctx.fillText('For sure, the portal brought him to the wrong royal palace...', 300, 480, 800)
+    timeoutId2 = setTimeout (function(){
+        playSound()
+        },5000);
+    timeoutId = setTimeout (function(){
+    ctx.drawImage(ballermann, 200, 150, 1200,800)
+    },10000);
+}
+
+class Monster {
+    constructor(x, y) {
+        this.x = x
+        this.y = y
+    }
+}
+
+class Items {
+    constructor(x, y) {
+        this.x = x
+        this.y = y
+    }
+}
+
+var skeleton = new Image();
+skeleton.src = 'skeleton.png';
+var sceleton1 = new Monster(1050, 180);
+var orc = new Image();
+orc.src = 'orc.png';
+var orc1 = new Monster(350, 190);
+var sorcerer = new Image();
+sorcerer.src = 'Sorcerer.png';
+var sorcerer1 = new Monster(100, 420)
+var wood3 = new Image();
+wood3.src = 'wood3.png';
+var wood = new Monster(600, 440)
+var grandmother = new Image();
+grandmother.src = 'Oma.png';
+var grandmother1 = new Monster(900, 410);
+var chest = new Image();
+chest.src = 'chest.png';
+var chest1 = new Monster(600, 720);
+var fairy = new Image();
+fairy.src = 'fairy2.png';
+var fairy1 = new Monster(550, 720);
+var teleport = new Image();
+teleport.src = 'teleport.png';
+var teleport1 = new Monster(80,380)
+
+function drawMonsters() {
+    ctx.drawImage(grandmother, 900, 410, 50, 50)
+    ctx.drawImage(skeleton, 1050, 180, 50, 50)
+    ctx.drawImage(orc, 350, 190, 50, 50)
+    ctx.drawImage(wood3, 600, 410, 50, 50)
+    ctx.drawImage(chest, 600, 720, 30, 30)
+    ctx.drawImage(fairy, 550, 720, 50, 50)
+    ctx.drawImage(teleport, 80, 380, 80, 80);
+    ctx.drawImage(sorcerer, 100, 420, 50, 50)
+}
+
 function drawEverything() {
     board()
     forrest()
 }
 
+function switchMode() {
+    if (iwanttofight === false) {
+         intervalId = setInterval(function () {
+            clearCanvas()
+            drawEverything()
+            drawHero()
+            drawMonsters()
+        }, 1000 / 60)
+        document.onkeydown = function (e) {
+            e.preventDefault()
+            switch (e.keyCode) {
+                case 37: player.moveLeft(); break;
+                case 38: player.moveUp(); break;
+                case 39: player.moveRight(); break;
+                case 40: player.moveDown(); break;
+                case 69: player.askMonster(); break;
+            }
+        }
+    }
+}
+
 function startFight() {
-    intervalId1 = setInterval(function () {
+   intervalId1 = setInterval(function () {
         clearArena()
         drawBg()
         drawFighter()
@@ -200,7 +302,7 @@ function startFight() {
     }, 1000 / 60)
     intervalId2 = setInterval(function () {
         skeletonFighting()
-         }, 500)
+    }, 500)
     document.onkeydown = function (r) {
         r.preventDefault()
         switch (r.keyCode) {
@@ -242,17 +344,11 @@ class Hero {
             this.x -= 20
         }
     }
-    askMonster(){
+    askMonster() {
         interaction()
     }
 }
 
-class Monster {
-    constructor(x, y) {
-        this.x = x
-        this.y = y
-    }
-}
 var hero = new Image();
 hero.src = 'Hero.png'
 var player = new Hero(940, 400);
@@ -260,25 +356,7 @@ function drawHero() {
     ctx.drawImage(hero, player.x, player.y, 50, 50)
 }
 
-var skeleton = new Image();
-skeleton.src = 'skeleton.png';
-var sceleton1 = new Monster(1050, 180);
-var orc = new Image();
-orc.src = 'orc.png';
-var orc1 = new Monster(350, 190);
-var sorcerer = new Image();
-sorcerer.src = 'Sorcerer.png';
-var sorcerer1 = new Monster(100, 420)
-var wood3 = new Image();
-wood3.src = 'wood3.png';
-var wood = new Monster (600, 440)
 
-function drawMonsters() {
-    ctx.drawImage(skeleton, 1050, 180, 50, 50)
-    ctx.drawImage(orc, 350, 190, 50, 50)
-    ctx.drawImage(sorcerer, 100, 420, 50, 50)
-    ctx.drawImage(wood3, 600, 410, 50, 50)
-}
 function clearArena() {
     ctx.clearRect(0, 0, 1200, 800);
 }
@@ -313,26 +391,27 @@ function arrowSkeletonClear() {
 function finish() {
     if (skeletonArcher1.health <= 0) {
         confirm('You won!')
+        console.log('You won!')
         iwanttofight = false
         clearInterval(intervalId1)
         clearInterval(intervalId2)
+        switchMode()
+        energyShard === true
         skeletonArcher1.health = 100
         fighter.health = 100
-        player.x = 0
-        player.y = 0
         drawEverything()
         drawHero()
         drawMonsters()
     }
     if (fighter.health <= 0) {
         confirm('You lose(r)!')
+        console.log('You lose!')
         iwanttofight = false
         clearInterval(intervalId1)
         clearInterval(intervalId2)
+        switchMode()
         skeletonArcher1.health = 100
         fighter.health = 100
-        player.x = 0
-        player.y = 0
         drawEverything()
         drawHero()
         drawMonsters()
@@ -340,12 +419,18 @@ function finish() {
 }
 
 function calculateDamage() {
-    if (arrowHero.y === skeletonArcher1.y) {
-        skeletonArcher1.health -= 10
+    if (arrowHero.y === skeletonArcher1.y && powerLaser === true) {
+        skeletonArcher1.health -= 20
     }
-    if (arrowSkeleton.y === fighter.y) {
+    else if (arrowHero.y === skeletonArcher1.y && powerLaser === false) {
+        skeletonArcher1.health -= 1
+    }
+    else if (arrowSkeleton.y === fighter.y) {
         fighter.health -= 10
     }
+    // else if (arrowSkeleton.y === fighter.y) {
+    //     fighter.health -= 30
+    // }
 }
 function skeletonFighting() {
     if (Math.floor(Math.random() * 5) === 0) {
@@ -357,23 +442,38 @@ function skeletonFighting() {
     else if (Math.floor(Math.random() * 5) === 2) {
         skeletonArcher1.moveUp();
     }
-    else {skeletonArcher1.shoot(); }
+    else { skeletonArcher1.shoot(); }
 }
-function interaction(){
-if (Math.abs(sceleton1.x - player.x) <= 10 && Math.abs(sceleton1.y - player.y) <= 10) {
-    confirm('Skeleton: You wansum?')
-    iwanttofight = true
-    clearInterval(intervalId)
-    startFight()
+function interaction() {
+    if (Math.abs(sceleton1.x - player.x) <= 10 && Math.abs(sceleton1.y - player.y) <= 10) {
+        confirm('Skeleton: You wansum?')
+        iwanttofight = true
+        clearInterval(intervalId)
+        startFight()
+    }
+    else if (Math.abs(sorcerer1.x - player.x) <= 10 && Math.abs(sorcerer1.y - player.y) <= 10) {
+        confirm('Gatekeeper: the Dark Portal has lost its power, for the Necromancer has stolen its energy shard. The hero who returns the shard will be generously rewarded by the king, but be aware of the Necromancer\'s dark power. Only the strongest fighters can face him in battle. You can find him on the graveyard in the east')
+    }
+    else if (Math.abs(orc1.x - player.x) <= 10 && Math.abs(orc1.y - player.y) <= 10 && goblinHammer === false) {
+        confirm('Goblin blacksmith: "I offer the finest laser cannons in the whole realm, but the nasty fairies have stolen my hammer. Can you return it to me? I promise to improve your firepower as shit"')
+    } 
+    else if (Math.abs(orc1.x - player.x) <= 10 && Math.abs(orc1.y - player.y) <= 10 && goblinHammer) {
+        confirm('You found the hammer! Here, have this XXL superlaser cannon')
+        powerLaser = true
+    }
+    else if (Math.abs(wood.x - player.x) <= 10 && Math.abs(wood.y - player.y) <= 10) {
+    confirm('West: The Dark Portal\nEast: Mönchengladbach')
 }
-if (Math.abs(sorcerer1.x - player.x) <= 10 && Math.abs(sorcerer1.y - player.y) <= 10) {
-    confirm('Evil Wizard: Fuck off')
+    else if (Math.abs(grandmother1.x - player.x) <= 10 && Math.abs(grandmother1.y - player.y) <= 10) {
+    confirm('Orcs have been spotted in the northern forrests! We need to inform the king about it as soon as possible. Travel west to the Dark Portal, it will bring you the royal castle')
+} 
+    else if (Math.abs(chest1.x - player.x) <= 10 && Math.abs(chest1.y - player.y) <= 10) {
+    confirm('You found the hammer')
+    goblinHammer = true
 }
-if (Math.abs(orc1.x - player.x) <= 10 && Math.abs(orc1.y - player.y) <= 10) {
-    confirm('Orc: fook fook 5$"')
-}
-if (Math.abs(wood.x - player.x) <= 10 && Math.abs(wood.y - player.y) <= 10) {
-    confirm('to the east, you shall find the desert land of Mönchengladbach. The dark portal is in the west')
+    else if (Math.abs(teleport1.x - player.x) <= 10 && Math.abs(teleport1.y - player.y) <= 10 && energyShard===true) {
+    confirm('Do you want to to use the Dark Portal?')
+    intro()
 }
 }
 
@@ -384,17 +484,18 @@ if (iwanttofight === false) {
         drawHero()
         drawMonsters()
     }, 1000 / 60)
-        document.onkeydown = function (e) {
-            e.preventDefault()
-            switch (e.keyCode) {
-                case 37: player.moveLeft(); break;
-                case 38: player.moveUp(); break;
-                case 39: player.moveRight(); break;
-                case 40: player.moveDown(); break;
-                case 69: player.askMonster(); break;
-            }            
+    document.onkeydown = function (e) {
+        e.preventDefault()
+        switch (e.keyCode) {
+            case 37: player.moveLeft(); break;
+            case 38: player.moveUp(); break;
+            case 39: player.moveRight(); break;
+            case 40: player.moveDown(); break;
+            case 69: player.askMonster(); break;
         }
-    
+    }
+}
+
 // } else {
 //     intervalId1 = setInterval(function () {
 //             clearArena()
@@ -420,7 +521,6 @@ if (iwanttofight === false) {
 //     }
 //     drawFighter()
 // }   
-}
 
 
 
