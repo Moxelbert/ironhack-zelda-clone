@@ -17,7 +17,7 @@ grass.src = 'images/grass.png';
 var sand = new Image();
 sand.src = 'images/sand.jpg';
 var fountain = new Image();
-fountain.src = 'images/WaterFountain.png';
+fountain.src = 'images/waterFountain.png';
 var fence = new Image();
 fence.src = 'images/fence.png';
 var house = new Image();
@@ -61,7 +61,7 @@ tower.src = 'images/tower.png';
 var tanne = new Image();
 tanne.src = 'images/tanne.png';
 var tree = new Image();
-tree.src = 'images/Tree.png';
+tree.src = 'images/tree.png';
 var bush = new Image();
 bush.src = 'images/bush.png';
 var cherry = new Image();
@@ -243,13 +243,13 @@ var orc = new Image();
 orc.src = 'images/orc.png';
 var orc1 = new Monster(350, 190);
 var sorcerer = new Image();
-sorcerer.src = 'images/Sorcerer.png';
+sorcerer.src = 'images/sorcerer.png';
 var sorcerer1 = new Monster(100, 420)
 var wood3 = new Image();
 wood3.src = 'images/wood3.png';
 var wood = new Monster(600, 440)
 var grandmother = new Image();
-grandmother.src = 'images/Oma.png';
+grandmother.src = 'images/oma.png';
 var grandmother1 = new Monster(900, 410);
 var chest = new Image();
 chest.src = 'images/chest.png';
@@ -359,7 +359,7 @@ class Hero {
 }
 
 var hero = new Image();
-hero.src = 'images/Hero.png'
+hero.src = 'images/hero.png'
 var player = new Hero(940, 400);
 function drawHero() {
     ctx.drawImage(hero, player.x, player.y, 50, 50)
@@ -376,7 +376,7 @@ function drawBg() {
     ctx.drawImage(graveyard, 0, 0, 1200, 800)
 }
 var archer = new Image();
-archer.src = 'images/Solo.png'
+archer.src = 'images/solo.png'
 var skeletonArcher = new Image();
 skeletonArcher.src = 'images/skeletonArcher.png'
 var fighter = new Fighter(100, 100, 650);
