@@ -13,63 +13,63 @@ var goblinHammer = false
 
 
 var grass = new Image();
-grass.src = 'grass.png';
+grass.src = 'images/grass.png';
 var sand = new Image();
-sand.src = 'sand.jpg';
+sand.src = 'images/sand.jpg';
 var fountain = new Image();
-fountain.src = 'WaterFountain.png';
+fountain.src = 'images/WaterFountain.png';
 var fence = new Image();
-fence.src = 'fence.png';
+fence.src = 'images/fence.png';
 var house = new Image();
-house.src = 'house1.png';
+house.src = 'images/house1.png';
 var house2 = new Image();
-house2.src = 'house2.png';
+house2.src = 'images/house2.png';
 var house3 = new Image();
-house3.src = 'house3.png';
+house3.src = 'images/house3.png';
 var wood2 = new Image();
-wood2.src = 'wood2.png';
+wood2.src = 'images/wood2.png';
 var castle = new Image();
-castle.src = 'castle.png';
+castle.src = 'images/castle.png';
 var cow = new Image();
-cow.src = 'cow.png';
+cow.src = 'images/cow.png';
 var cow2 = new Image();
-cow2.src = 'cow2.png';
+cow2.src = 'images/cow2.png';
 var bridge = new Image();
-bridge.src = 'bridge.png';
+bridge.src = 'images/bridge.png';
 var rock = new Image();
-rock.src = 'rock.png';
+rock.src = 'images/rock.png';
 var skull = new Image();
-skull.src = 'skull.png';
+skull.src = 'images/skull.png';
 var ballermann = new Image();
-ballermann.src = 'ballermann2.jpg'
+ballermann.src = 'images/ballermann2.jpg'
 var torch = new Image();
-torch.src = 'torch.png';
+torch.src = 'images/torch.png';
 var oldTree = new Image();
-oldTree.src = 'oldTree.png';
+oldTree.src = 'images/oldTree.png';
 var rottenTree = new Image();
-rottenTree.src = 'rottenTree.png';
+rottenTree.src = 'images/rottenTree.png';
 var lumber = new Image();
-lumber.src = 'lumber.png';
+lumber.src = 'images/lumber.png';
 var grave1 = new Image();
-grave1.src = 'grave1.png';
+grave1.src = 'images/grave1.png';
 var grave2 = new Image();
-grave2.src = 'grave2.png';
+grave2.src = 'images/grave2.png';
 var grave3 = new Image();
-grave3.src = 'grave3.png';
+grave3.src = 'images/grave3.png';
 var tower = new Image();
-tower.src = 'tower.png';
+tower.src = 'images/tower.png';
 var tanne = new Image();
-tanne.src = 'tanne.png';
+tanne.src = 'images/tanne.png';
 var tree = new Image();
-tree.src = 'Tree.png';
+tree.src = 'images/Tree.png';
 var bush = new Image();
-bush.src = 'bush.png';
+bush.src = 'images/bush.png';
 var cherry = new Image();
-cherry.src = 'cherryTree.png';
+cherry.src = 'images/cherryTree.png';
 var water = new Image();
-water.src = 'water.png';
+water.src = 'images/water.png';
 var anvil = new Image();
-anvil.src = 'anvil.png';
+anvil.src = 'images/anvil.png';
 
 function board() {
     ctx.drawImage(grass, 0, 0, 1200, 800)
@@ -237,28 +237,28 @@ class Items {
 }
 
 var skeleton = new Image();
-skeleton.src = 'skeleton.png';
+skeleton.src = 'images/skeleton.png';
 var sceleton1 = new Monster(1050, 180);
 var orc = new Image();
-orc.src = 'orc.png';
+orc.src = 'images/orc.png';
 var orc1 = new Monster(350, 190);
 var sorcerer = new Image();
-sorcerer.src = 'Sorcerer.png';
+sorcerer.src = 'images/Sorcerer.png';
 var sorcerer1 = new Monster(100, 420)
 var wood3 = new Image();
-wood3.src = 'wood3.png';
+wood3.src = 'images/wood3.png';
 var wood = new Monster(600, 440)
 var grandmother = new Image();
-grandmother.src = 'Oma.png';
+grandmother.src = 'images/Oma.png';
 var grandmother1 = new Monster(900, 410);
 var chest = new Image();
-chest.src = 'chest.png';
+chest.src = 'images/chest.png';
 var chest1 = new Monster(600, 720);
 var fairy = new Image();
-fairy.src = 'fairy2.png';
+fairy.src = 'images/fairy2.png';
 var fairy1 = new Monster(550, 720);
 var teleport = new Image();
-teleport.src = 'teleport.png';
+teleport.src = 'images/teleport.png';
 var teleport1 = new Monster(80,380)
 
 function drawMonsters() {
@@ -359,7 +359,7 @@ class Hero {
 }
 
 var hero = new Image();
-hero.src = 'Hero.png'
+hero.src = 'images/Hero.png'
 var player = new Hero(940, 400);
 function drawHero() {
     ctx.drawImage(hero, player.x, player.y, 50, 50)
@@ -371,14 +371,14 @@ function clearArena() {
 }
 
 var graveyard = new Image();
-graveyard.src = 'background.jpg'
+graveyard.src = 'images/background.jpg'
 function drawBg() {
     ctx.drawImage(graveyard, 0, 0, 1200, 800)
 }
 var archer = new Image();
-archer.src = 'Solo.png'
+archer.src = 'images/Solo.png'
 var skeletonArcher = new Image();
-skeletonArcher.src = 'skeletonArcher.png'
+skeletonArcher.src = 'images/skeletonArcher.png'
 var fighter = new Fighter(100, 100, 650);
 function drawFighter() {
     ctx.drawImage(archer, fighter.x, fighter.y, 200, 200)
