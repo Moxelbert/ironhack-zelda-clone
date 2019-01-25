@@ -49,5 +49,3 @@ moveRight() {
             ctx.fill()    
     }
 }
-
-    

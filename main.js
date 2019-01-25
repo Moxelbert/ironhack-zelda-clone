@@ -1,5 +1,4 @@
 // select the canvas document and create ctx (the entrypoint to draw shapes)
-
 var canvas = document.querySelector("canvas")
 var ctx = canvas.getContext("2d")
 
@@ -8,7 +7,7 @@ var width = canvas.width
 var height = canvas.height
 
 var iwanttofight = false
-var powerLaser = true
+var powerLaser = false
 var energyShard = true
 var goblinHammer = false
 
@@ -201,7 +200,7 @@ function intro() {
     ctx.rect(0, 0, 1200, 800) 
     ctx.strokeRect(0, 0, 1200, 800) 
     ctx.fillText("Our hero enters the portal.", 300, 200, 600)
-    ctx.fillText('The border of time and space begin to dissolve.', 300, 260, 600)
+    ctx.fillText('The borders of time and space begin to dissolve.', 300, 260, 600)
     ctx.fillText('After some time a strange music starts to play.', 300, 320, 600)
     ctx.fillText('When our hero opens the eyes, he finds himself in a foreign and beautiful country.', 250, 380, 800)
     ctx.fillText('For sure, the portal brought him to the wrong royal palace...', 300, 480, 800)
@@ -210,7 +209,7 @@ function intro() {
         },5000);
     timeoutId = setTimeout (function(){
     ctx.drawImage(ballermann, 200, 150, 1200,800)
-    },10000);
+    },15000);
 }
 
 class Monster {
@@ -367,12 +366,12 @@ function drawBg() {
     ctx.drawImage(graveyard, 0, 0, 1200, 800)
 }
 var archer = new Image();
-archer.src = 'Hero4.png'
+archer.src = 'Solo.png'
 var skeletonArcher = new Image();
 skeletonArcher.src = 'skeletonArcher.png'
 var fighter = new Fighter(100, 100, 650);
 function drawFighter() {
-    ctx.drawImage(archer, fighter.x, fighter.y, 150, 150)
+    ctx.drawImage(archer, fighter.x, fighter.y, 200, 200)
 }
 var skeletonArcher1 = new Foe(100, 1000, 650);
 function drawSkeletonArcher() {
@@ -390,7 +389,7 @@ function arrowSkeletonClear() {
 }
 function finish() {
     if (skeletonArcher1.health <= 0) {
-        confirm('You won!')
+        confirm('The necromancer is defeated. After searching his body, you find the energy shard')
         console.log('You won!')
         iwanttofight = false
         clearInterval(intervalId1)
@@ -455,14 +454,14 @@ function interaction() {
         confirm('Gatekeeper: the Dark Portal has lost its power, for the Necromancer has stolen its energy shard. The hero who returns the shard will be generously rewarded by the king, but be aware of the Necromancer\'s dark power. Only the strongest fighters can face him in battle. You can find him on the graveyard in the east')
     }
     else if (Math.abs(orc1.x - player.x) <= 10 && Math.abs(orc1.y - player.y) <= 10 && goblinHammer === false) {
-        confirm('Goblin blacksmith: "I offer the finest laser cannons in the whole realm, but the nasty fairies have stolen my hammer. Can you return it to me? I promise to improve your firepower as shit"')
+        confirm('Goblin blacksmith: "I offer the finest laser cannons in the whole realm, but the nasty fairies have stolen my hammer. Can you return it to me? As a reward, I will provide you with better firepower"')
     } 
     else if (Math.abs(orc1.x - player.x) <= 10 && Math.abs(orc1.y - player.y) <= 10 && goblinHammer) {
         confirm('You found the hammer! Here, have this XXL superlaser cannon')
         powerLaser = true
     }
     else if (Math.abs(wood.x - player.x) <= 10 && Math.abs(wood.y - player.y) <= 10) {
-    confirm('West: The Dark Portal\nEast: Mönchengladbach')
+    confirm('West: The Dark Portal\nEast: Mönchengladbach\nSouth: Fairy Ranch\nNorth: Stadtpark')
 }
     else if (Math.abs(grandmother1.x - player.x) <= 10 && Math.abs(grandmother1.y - player.y) <= 10) {
     confirm('Orcs have been spotted in the northern forrests! We need to inform the king about it as soon as possible. Travel west to the Dark Portal, it will bring you the royal castle')
@@ -496,6 +495,7 @@ if (iwanttofight === false) {
     }
 }
 
+
 // } else {
 //     intervalId1 = setInterval(function () {
 //             clearArena()
@@ -521,6 +521,5 @@ if (iwanttofight === false) {
 //     }
 //     drawFighter()
 // }   
-
 
 
