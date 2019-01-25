@@ -142,10 +142,20 @@ function board() {
     ctx.drawImage(tower, 50, 580, 70, 180);
     ctx.drawImage(anvil, 300, 190, 50,50)
 }
+var mogwai = new Audio('07 Stanley Kubrick.m4a')
+function playSound1() {
+    mogwai.play()
+}
 var drews = new Audio("12 Ich bin der König von Mallorca (V.m4a")
+drews.currentTime = 24
 function playSound() {
     drews.play()
 } 
+var harmonica = new Audio("harmonica.m4a")
+harmonica.currentTime = 58
+function playSound2() {
+    harmonica.play()
+}
 
 function forrest() {
 
@@ -394,6 +404,7 @@ function finish() {
         iwanttofight = false
         clearInterval(intervalId1)
         clearInterval(intervalId2)
+        harmonica.pause()
         switchMode()
         energyShard === true
         skeletonArcher1.health = 100
@@ -408,6 +419,7 @@ function finish() {
         iwanttofight = false
         clearInterval(intervalId1)
         clearInterval(intervalId2)
+        harmonica.pause()
         switchMode()
         skeletonArcher1.health = 100
         fighter.health = 100
@@ -445,7 +457,9 @@ function skeletonFighting() {
 }
 function interaction() {
     if (Math.abs(sceleton1.x - player.x) <= 10 && Math.abs(sceleton1.y - player.y) <= 10) {
-        confirm('Skeleton: You wansum?')
+        //mogwai.pause()
+        // harmonica.play()
+        confirm('Our hero enters the Necromancer\'\ s crypt. An unnatural cold creeps into his bones. The mighty lord of undead rises from his throne...')
         iwanttofight = true
         clearInterval(intervalId)
         startFight()
@@ -459,18 +473,23 @@ function interaction() {
     else if (Math.abs(orc1.x - player.x) <= 10 && Math.abs(orc1.y - player.y) <= 10 && goblinHammer) {
         confirm('You found the hammer! Here, have this XXL superlaser cannon')
         powerLaser = true
+        harmonica.play()
     }
     else if (Math.abs(wood.x - player.x) <= 10 && Math.abs(wood.y - player.y) <= 10) {
     confirm('West: The Dark Portal\nEast: Mönchengladbach\nSouth: Fairy Ranch\nNorth: Stadtpark')
 }
     else if (Math.abs(grandmother1.x - player.x) <= 10 && Math.abs(grandmother1.y - player.y) <= 10) {
     confirm('Orcs have been spotted in the northern forrests! We need to inform the king about it as soon as possible. Travel west to the Dark Portal, it will bring you the royal castle')
+    // timeoutId3 = setTimeout (function(){
+    //     playSound1()
+    //     },8000);
 } 
     else if (Math.abs(chest1.x - player.x) <= 10 && Math.abs(chest1.y - player.y) <= 10) {
     confirm('You found the hammer')
     goblinHammer = true
 }
     else if (Math.abs(teleport1.x - player.x) <= 10 && Math.abs(teleport1.y - player.y) <= 10 && energyShard===true) {
+    harmonica.pause()
     confirm('Do you want to to use the Dark Portal?')
     intro()
 }
