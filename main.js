@@ -216,7 +216,7 @@ function intro() {
     ctx.fillText('For sure, the portal brought him to the wrong royal palace...', 300, 480, 800)
     timeoutId2 = setTimeout (function(){
         playSound()
-        },5000);
+        },8000);
     timeoutId = setTimeout (function(){
     ctx.drawImage(ballermann, 200, 150, 1200,800)
     },15000);
